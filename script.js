@@ -96,4 +96,95 @@ const questions = [
       correct_answer: "Java",
       incorrect_answers: ["Python", "C", "Jakarta"],
     },
-  ];
+];
+
+
+// Variabili per tracciare il quiz
+let currentQuestionIndex = 0;
+let score = 0;
+
+// Elementi del DOM
+const questionBox = document.querySelector('.question-box');
+const questionNumber = document.querySelector('.question-number');
+const nextBtn = document.getElementById('next-btn');
+
+// Funzione per mescolare le risposte
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+// Funzione per mostrare una domanda
+function showQuestion(index) {
+    const currentQuestion = questions[index];
+
+    // Pulizia della question-box
+    questionBox.innerHTML = '';
+
+    //Aggiungi la domanda
+    const questionText = document.createElement('h1');
+    questionText.textContent = currentQuestion.question;
+    
+
+    // Mescola le risposte
+    const answers = shuffle([currentQuestion.correct_answer, ...currentQuestion.incorrect_answers]);
+
+    // Aggiungi le opzioni come radio button
+    answers.forEach(option => {
+        const label = document.createElement('label');
+        label.classList.add('option');
+
+        const input = document.createElement('input');
+        input.type = 'radio';
+        input.name = 'answer';
+        input.value = option;
+
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(option));
+        questionBox.appendChild(label);
+    });
+
+    // Aggiorna il numero della domanda
+    questionNumber.textContent = `Domanda ${index + 1} / ${questions.length}`;
+}
+// Funzione per controllare la risposta
+function checkAnswer() {
+    const selectedOption = document.querySelector('input[name="answer"]:checked');
+    if (selectedOption) {
+        const answer = selectedOption.value;
+        if (answer === questions[currentQuestionIndex].correct_answer) {
+            score++;
+        }
+    }
+}
+
+// Gestione del pulsante Avanti
+nextBtn.addEventListener('click', () => {
+    // Controlla la risposta
+    checkAnswer();
+
+    // Passa alla domanda successiva
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < questions.length) {
+        showQuestion(currentQuestionIndex);
+    } else {
+        showResults();
+    }
+});
+
+// Funzione per mostrare i risultati
+function showResults() {
+    questionBox.innerHTML = `
+        <h2>Quiz Completato!</h2>
+        <p>Hai risposto correttamente a ${score} su ${questions.length} domande.</p>
+    `;
+    questionNumber.textContent = '';
+    nextBtn.style.display = 'none';
+}
+
+// Mostra la prima domanda al caricamento
+showQuestion(currentQuestionIndex);

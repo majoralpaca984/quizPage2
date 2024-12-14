@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const duration = 16; // total countdown time in seconds
+    const duration = 30; // total countdown time in seconds
     const progressCircle = document.querySelector(".progress-circle");
     const timerText = document.querySelector(".seconds");
 
     const radius = progressCircle.r.baseVal.value;
-    const circumference = 2 * Math.PI * radius;
+    const circumference = 5 * Math.PI * radius;
 
     progressCircle.style.strokeDasharray = `${circumference}`;
     progressCircle.style.strokeDashoffset = "0";
@@ -33,3 +33,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const timerInterval = setInterval(updateTimer, 1000);
 });
+
+
