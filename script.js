@@ -98,12 +98,9 @@ const questions = [
     },
 ];
 
-
-// Variabili per tracciare il quiz
 let currentQuestionIndex = 0;
 let score = 0;
 
-// Elementi del DOM
 const questionBox = document.querySelector('.question-box');
 const questionNumber = document.querySelector('.question-number');
 const nextBtn = document.getElementById('next-btn');

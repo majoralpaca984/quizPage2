@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const duration = 30; // total countdown time in seconds
+    const duration = 30; 
     const progressCircle = document.querySelector(".progress-circle");
     const timerText = document.querySelector(".seconds");
 
